@@ -5,13 +5,14 @@ import android.util.Log
 class LogUtils {
     companion object {
 
-        var LOG_LEVEL = 0x10
 
         const val VERBOSE = 0x10
         const val DEBUG = 0x08
         const val INFO = 0x04
         const val WARN = 0x02
         const val ERROR = 0x01
+
+        var LOG_LEVEL = VERBOSE or DEBUG or INFO or WARN or ERROR
 
         fun setLevel(level: Int) {
             LOG_LEVEL = level
