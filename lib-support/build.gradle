@@ -1,0 +1,70 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
+
+android {
+    namespace 'tech.wcw.support'
+    compileSdk rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.minSdk
+        targetSdk rootProject.ext.targetSdk
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'tech.wcw'
+                artifactId = 'support'
+                version =  rootProject.ext.versionName
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation rootProject.ext.deps.junit
+    androidTestImplementation rootProject.ext.deps.android_junit
+    androidTestImplementation rootProject.ext.deps.espresso_core
+    api rootProject.ext.deps.material
+    api rootProject.ext.deps.activity
+    api rootProject.ext.deps.appcompat
+    api rootProject.ext.deps.core_ktx
+    api rootProject.ext.deps.coroutines_core
+    api rootProject.ext.deps.coroutines_android
+    api rootProject.ext.deps.lifecycle_extensions
+    api rootProject.ext.deps.lifecycle_viewmodel_ktx
+    api rootProject.ext.deps.lifecycle_runtime_ktx
+    api rootProject.ext.deps.lifecycle_livedata_ktx
+    api rootProject.ext.deps.retrofit
+    api rootProject.ext.deps.converter_gson
+    api rootProject.ext.deps.logging_interceptor
+}
